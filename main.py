@@ -28,7 +28,7 @@ for x in range(0, board_size_factor):
         cells.append(cell_name)
         dark = not dark
 
-last_label.create_image((cell_size / 2, cell_size / 2), image=img, anchor=tk.CENTER)
+last_label.create_image((cell_size / 2, cell_size / 2), image=img)
 print(cells)
 
 if __name__ == '__main__':
