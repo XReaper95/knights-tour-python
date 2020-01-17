@@ -1,3 +1,4 @@
+import win32api
 from screeninfo import screeninfo as _screeninfo
 
 
@@ -17,3 +18,10 @@ def center_windows(win):
     x = (screen_width // 2) - (width // 2)
     y = (screen_height // 2) - (height // 2)
     win.geometry('{}x{}+{}+{}'.format(width, height, x, y))
+
+
+if __name__ == '__main__':
+    monitors = win32api.EnumDisplayMonitors()
+    for mon in monitors:
+        (left, top, right, bottom) = mon[2]
+        print(right - left, bottom - top)

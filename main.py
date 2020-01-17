@@ -8,8 +8,7 @@ root.resizable = False
 cell_size = 40
 board_size_factor = 8
 dark = False
-cells = []
-last_cell = None
+cells = {}
 img = tk.PhotoImage(file="chess_knight.png")
 
 if board_size_factor < 4:
@@ -20,16 +19,22 @@ for x in range(0, board_size_factor):
     dark = not dark
     for y in range(0, board_size_factor):
         color = '#0e140c' if dark else '#a7ab90'
-        cell_name = "({0}, {1})".format(x, y)
+        cell_name = (x, y)
 
-        last_cell = tk.Canvas(root, bg=color, width=cell_size, height=cell_size, name=cell_name)
-        last_cell.grid(row=x, column=y)
+        cells[cell_name] = tk.Canvas(root, bg=color, width=cell_size, height=cell_size, highlightthickness=0)
+        cells[cell_name].grid(row=x, column=y)
 
-        cells.append(cell_name)
         dark = not dark
 
-last_cell.create_image((last_cell.winfo_reqwidth() / 2, last_cell.winfo_reqheight() / 2), image=img)
-print(cells)
+create_pieces = list()
+create_pieces.append((7, 7))
+
+for cell in create_pieces:
+    target = cells[cell]
+    target.create_image((target.winfo_reqwidth() / 2, target.winfo_reqheight() / 2), image=img)
+
+for key in cells.keys():
+    print(key)
 
 if __name__ == '__main__':
     center_windows(root)
