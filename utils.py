@@ -1,9 +1,18 @@
+import platform
 from screeninfo import screeninfo as _screeninfo
 
 
 def center_windows(win):
     win.update_idletasks()
-    monitors = _screeninfo.get_monitors()
+
+    if platform.system() == 'Windows':
+        import ctypes
+        from screeninfo import Enumerator
+        ctypes.windll.user32.SetProcessDPIAware()
+        monitors = _screeninfo.get_monitors(Enumerator.Cygwin)
+    else:
+        monitors = _screeninfo.get_monitors()
+
     current_monitor = monitors[0]
 
     for m in reversed(monitors):
