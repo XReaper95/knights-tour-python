@@ -13,4 +13,4 @@ from src.knights_tour import KnightsTourWindow
 # cell4.create_line(cell4.winfo_reqwidth() / 2, cell4.winfo_reqheight() / 2, 0, 0, fill='red', width=1.5)
 
 if __name__ == '__main__':
-    app = KnightsTourWindow(4)
+    app = KnightsTourWindow(5)
