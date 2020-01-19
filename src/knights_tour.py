@@ -1,17 +1,18 @@
 import tkinter as tk
 
 from src.board import Board
+from src.path_finder import calculate_route
 from src.utils import center_tkinter_windows
 
 
-class KnightsTour(tk.Tk):
+class KnightsTourWindow(tk.Tk):
     def __init__(self, size):
-        super(KnightsTour, self).__init__()
+        super(KnightsTourWindow, self).__init__()
         self.title("Knight`s tour")
         self.resizable(False, False)
 
         self._board = Board(40, size)
-        self._movements = [(0, 1), (3, 4), (4, 5), (1, 1), (2, 2)]
+        self._movements = calculate_route(size)
         self._step = 0
         self._movement_speed = 600
 

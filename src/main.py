@@ -1,4 +1,4 @@
-from src.knights_tour import KnightsTour
+from src.knights_tour import KnightsTourWindow
 
 # cell1 = board.get_cell(0, 0)
 # cell2 = board.get_cell(1, 1)
@@ -13,4 +13,4 @@ from src.knights_tour import KnightsTour
 # cell4.create_line(cell4.winfo_reqwidth() / 2, cell4.winfo_reqheight() / 2, 0, 0, fill='red', width=1.5)
 
 if __name__ == '__main__':
-    app = KnightsTour(7)
+    app = KnightsTourWindow(4)
