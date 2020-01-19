@@ -2,7 +2,7 @@ import platform
 from screeninfo import screeninfo as _screeninfo
 
 
-def center_windows(win):
+def center_tkinter_windows(win):
     win.update_idletasks()
 
     if platform.system() == 'Windows':
