@@ -22,7 +22,7 @@ class KnightsTour(tk.Tk):
         self._reset_timer_sec = 2
         self._resetting = False
 
-        self.__start()
+        self.__run()
 
     def move_piece(self):
         if self._resetting:
@@ -57,21 +57,6 @@ class KnightsTour(tk.Tk):
         self.after(self._movement_speed, self.move_piece)
         self._step += 1
 
-    def __center_windows(self):
-        center_tkinter_windows(self)
-
-    def __start(self):
-        if not self._movements:
-            print("It was not possible to obtain a valid path to solve the problem")
-            sys.exit(1)
-        else:
-            self._board.generate()
-            # self._board.print_cells()
-            self.after(0, self.move_piece)
-
-            self.__center_windows()
-            self.mainloop()
-
     def __calculate_path(self, path_finder, size):
         if size < self._min_size:
             print(f"Board size must be {self._min_size} or bigger")
@@ -93,3 +78,14 @@ class KnightsTour(tk.Tk):
         print(f"Path calculation took {round(end - start, 2)} seconds")
 
         return movements
+
+    def __center_windows(self):
+        center_tkinter_windows(self)
+
+    def __run(self):
+        self._board.generate()
+        # self._board.print_cells()
+        self.after(0, self.move_piece)
+
+        self.__center_windows()
+        self.mainloop()
