@@ -8,19 +8,12 @@ class Board(tk.Canvas):
         self._cells = {}
         self._dark_color = '#0e140c'
         self._clear_color = '#a7ab90'
-        self._piece_tag = 'k'
+        self._piece_tag = 'knight'
+        self._path_tag = 'path'
+        self._background_tag = 'square'
         self._img = tk.PhotoImage(file="../assets/chess_knight.png")
         self._board_size = board_size
         self._cell_size = 45
-
-        if board_size < 4:
-            print("Board size must be 4 or bigger, setting to minimum")
-            self._board_size = board_size = 4
-        elif board_size > 15:
-            print("Board too big, setting to maximum")
-            self._board_size = board_size = 15
-
-        print(f"Creating {self._board_size}x{self._board_size} board")
 
         self.configure(
             bg='bisque',
@@ -47,7 +40,7 @@ class Board(tk.Canvas):
                 x2 = x1 + self._cell_size
                 y2 = y1 + self._cell_size
 
-                self.create_rectangle(x1, y1, x2, y2, outline="black", fill=color)
+                self.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tag=self._background_tag)
                 self._cells[(row, col)] = (col * self._cell_size) + self._cell_size // 2, \
                                           (row * self._cell_size) + self._cell_size // 2
 
@@ -67,7 +60,7 @@ class Board(tk.Canvas):
             print(cell_name)
 
     def create_knight(self, cell_x, cell_y):
-        self.delete(self._piece_tag)
+        self.erase_knight()
 
         target_cell = self.get_cell(cell_x, cell_y)
         if target_cell:
@@ -76,11 +69,16 @@ class Board(tk.Canvas):
             print(f"Cannot create piece at ({cell_x}, {cell_y}).")
 
     def draw_path(self, cell_1, cell_2):
-        self.create_line(cell_1[0], cell_1[1], cell_2[0], cell_2[1], width=1.3, fill='red', tag='path')
+        self.create_line(cell_1[0], cell_1[1], cell_2[0], cell_2[1], width=1.3, fill='red', tag=self._path_tag)
 
     def draw_point(self, cell):
-        self.create_oval(cell[0]-3, cell[1]-3, cell[0]+3, cell[1]+3, fill='red', tag='point')
+        self.create_oval(cell[0]-3, cell[1]-3, cell[0]+3, cell[1]+3, fill='red', tag=self._path_tag)
+
+    def erase_knight(self):
+        self.delete(self._piece_tag)
 
     def erase_path(self):
-        self.delete('path')
-        self.delete('point')
+        self.delete(self._path_tag)
+
+    def erase_background(self):
+        self.delete(self._background_tag)

@@ -1,4 +1,5 @@
-from src.knights_tour import KnightsTourWindow
+from src.knights_tour import KnightsTour
+from src.pathfinding.backtracking import Backtracking
 
 if __name__ == '__main__':
-    app = KnightsTourWindow(8)
+    app = KnightsTour(5, Backtracking, False)
