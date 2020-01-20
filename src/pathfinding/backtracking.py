@@ -11,7 +11,11 @@ class Backtracking(PathFinder):
 
     def get_movements(self):
         """
-            This function solves the Knight Tour problem using
+            This function is nearly identical to the original one, but changed
+            the return value to a list that contains the movements, or empty
+            if no path was determined.
+
+            ORIGINAL DOC: This function solves the Knight Tour problem using
             Backtracking. This function mainly uses solveKTUtil()
             to solve the problem. It returns false if no complete
             tour is possible, otherwise return true and prints the
