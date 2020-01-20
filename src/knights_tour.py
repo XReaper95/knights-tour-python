@@ -90,10 +90,17 @@ class KnightsTour(tk.Tk):
             print(f"Cannot obtain a valid path for start point ({start_point[0]},{start_point[1]})")
             sys.exit(1)
         else:
-            print(f"Start point set at ({start_point[0]},{start_point[1]})")
+            print(f"Start point set at ({start_point[0]},{start_point[1]}).")
 
         end = time.time()
-        print(f"Path calculation took {round(end - start, 2)} seconds")
+        elapsed_time = int(end - start)
+
+        if elapsed_time < 59:
+            print(f"Path calculation took {round(end - start, 2)} seconds to complete.")
+        else:
+            import datetime
+            formatted_time = str(datetime.timedelta(seconds=elapsed_time))
+            print(f"Path calculation took {formatted_time} to complete.")
 
         return movements
 
