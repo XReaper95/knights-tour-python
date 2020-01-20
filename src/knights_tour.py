@@ -82,7 +82,7 @@ class KnightsTour(tk.Tk):
             sys.exit(1)
 
         algorithm = path_finder(size, start_point)
-        print(f"Calculating path for {size}x{size} board using '{algorithm.name}'....")
+        print(f"Calculating path for {size}x{size} board using algorithm '{algorithm.name}'....")
         start = time.time()
         movements = algorithm.get_movements()
 
