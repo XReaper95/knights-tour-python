@@ -2,14 +2,14 @@ import tkinter as tk
 
 
 class Board(tk.Canvas):
-    def __init__(self,board_size, root_widget):
+    def __init__(self, board_size, root_widget):
         super().__init__(root_widget)
 
         self._cells = {}
         self._dark_color = '#0e140c'
         self._clear_color = '#a7ab90'
         self._piece_tag = 'k'
-        self._img = tk.PhotoImage(file="assets/chess_knight.png")
+        self._img = tk.PhotoImage(file="../assets/chess_knight.png")
         self._board_size = board_size
         self._cell_size = 45
 
@@ -48,7 +48,8 @@ class Board(tk.Canvas):
                 y2 = y1 + self._cell_size
 
                 self.create_rectangle(x1, y1, x2, y2, outline="black", fill=color)
-                self._cells[(row, col)] = (col * self._cell_size) + self._cell_size // 2
+                self._cells[(row, col)] = (col * self._cell_size) + self._cell_size // 2, \
+                                          (row * self._cell_size) + self._cell_size // 2
 
                 color = black if color is white else white
 
@@ -56,7 +57,7 @@ class Board(tk.Canvas):
         if cell_x < self._board_size and cell_y < self._board_size:
             return self._cells[(cell_x, cell_y)]
         else:
-            print(f"Error creating piece at ({cell_x}, {cell_y}), cell out of board.")
+            print(f"Error for coordinates ({cell_x}, {cell_y}), cell out of board.")
             return None
 
     def print_cells(self):
@@ -70,13 +71,15 @@ class Board(tk.Canvas):
 
         target_cell = self.get_cell(cell_x, cell_y)
         if target_cell:
-            self.create_image((target_cell, target_cell), image=self._img, tag=self._piece_tag)
+            self.create_image((target_cell[0], target_cell[1]), image=self._img, tag=self._piece_tag)
+        else:
+            print(f"Cannot create piece at ({cell_x}, {cell_y}).")
 
     def draw_path(self, cell_1, cell_2):
-        self.create_line(cell_1, cell_1, cell_2, cell_2, width=1.3, fill='red', tag='path')
+        self.create_line(cell_1[0], cell_1[1], cell_2[0], cell_2[1], width=1.3, fill='red', tag='path')
 
     def draw_point(self, cell):
-        self.create_oval(cell-3, cell-3, cell+3, cell+3, fill='red', tag='point')
+        self.create_oval(cell[0]-3, cell[1]-3, cell[0]+3, cell[1]+3, fill='red', tag='point')
 
     def erase_path(self):
         self.delete('path')
