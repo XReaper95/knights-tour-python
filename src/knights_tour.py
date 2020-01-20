@@ -1,20 +1,22 @@
 import sys
 import time
+import inspect
 import tkinter as tk
 
 from src.board import Board
+from src.pathfinding.path_finder import PathFinder
 from src.utils import center_tkinter_windows
 
 
 class KnightsTour(tk.Tk):
-    def __init__(self, size, path_finder, auto_reset):
+    def __init__(self, size, path_finder, start_point, auto_reset):
         super(KnightsTour, self).__init__()
         self.title("Knight`s tour")
         self.resizable(False, False)
 
         self._min_size = 5
         self._max_size = 15
-        self._movements = self.__calculate_path(path_finder, size)
+        self._movements = self.__calculate_path(path_finder, size, start_point)
         self._board = Board(size, self)
         self._step = 0
         self._movement_speed = 200
@@ -38,8 +40,10 @@ class KnightsTour(tk.Tk):
                 print(f"Resetting after {self._reset_timer_sec} seconds")
                 return
             else:
+                start_path = self._movements[0]
+                start_cell = self._board.get_cell(start_path[0], start_path[1])
+                self._board.mark_start(start_cell)
                 self._board.erase_background()
-                self._board.erase_knight()
                 print("Algorithm finished!")
                 return
 
@@ -57,7 +61,19 @@ class KnightsTour(tk.Tk):
         self.after(self._movement_speed, self.move_piece)
         self._step += 1
 
-    def __calculate_path(self, path_finder, size):
+    def __calculate_path(self, path_finder, size, start_point):
+        if not inspect.isclass(path_finder):
+            print("Path finder must be a python class")
+            sys.exit(1)
+
+        if not issubclass(path_finder, PathFinder):
+            print(f"CLass '{path_finder.__name__}' is not a valid algorithm!")
+            sys.exit(1)
+
+        if type(start_point).__name__ != 'tuple':
+            print(f"Start point must be a tuple!")
+            sys.exit(1)
+
         if size < self._min_size:
             print(f"Board size must be {self._min_size} or bigger")
             sys.exit(1)
@@ -65,14 +81,16 @@ class KnightsTour(tk.Tk):
             print("Board too big")
             sys.exit(1)
 
-        algorithm = path_finder(size)
+        algorithm = path_finder(size, start_point)
         print(f"Calculating path for {size}x{size} board using '{algorithm.name}'....")
         start = time.time()
         movements = algorithm.get_movements()
 
         if not movements:
-            print("It was not possible to obtain a valid path to solve the problem")
+            print(f"Cannot obtain a valid path for start point ({start_point[0]},{start_point[1]})")
             sys.exit(1)
+        else:
+            print(f"Start point set at ({start_point[0]},{start_point[1]})")
 
         end = time.time()
         print(f"Path calculation took {round(end - start, 2)} seconds")

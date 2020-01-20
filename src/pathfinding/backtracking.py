@@ -6,8 +6,8 @@ from src.pathfinding.path_finder import PathFinder
 
 
 class Backtracking(PathFinder):
-    def __init__(self, board_size):
-        super().__init__('Backtracking', board_size)
+    def __init__(self, board_size, start_point):
+        super().__init__('Backtracking', board_size, start_point)
 
     def get_movements(self):
         """
@@ -30,7 +30,7 @@ class Backtracking(PathFinder):
         move_y = [1, 2, 2, 1, -1, -2, -2, -1]
 
         # Since the Knight is initially at the first block
-        board[0][0] = 0
+        board[self.start_point[0]][self.start_point[1]] = 0
 
         # Step counter for knight's position
         pos = 1

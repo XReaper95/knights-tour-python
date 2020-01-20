@@ -82,3 +82,6 @@ class Board(tk.Canvas):
 
     def erase_background(self):
         self.delete(self._background_tag)
+
+    def mark_start(self, cell):
+        self.create_oval(cell[0]-8, cell[1]-8, cell[0]+8, cell[1]+8, fill='blue', tag=self._path_tag)
