@@ -7,7 +7,7 @@ from src.pathfinding.path_finder import PathFinder
 
 class Backtracking(PathFinder):
     def __init__(self, board_size, start_point):
-        super().__init__('Backtracking', board_size, start_point)
+        super().__init__('Backtracking', board_size, start_point, 9)
 
     def get_movements(self):
         """

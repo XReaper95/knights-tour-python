@@ -15,7 +15,6 @@ class KnightsTour(tk.Tk):
         self.resizable(False, False)
 
         self._min_size = 5
-        self._max_size = 15
         self._movements = self.__calculate_path(path_finder, size, start_point)
         self._board = Board(size, self)
         self._step = 0
@@ -75,13 +74,15 @@ class KnightsTour(tk.Tk):
             sys.exit(1)
 
         if size < self._min_size:
-            print(f"Board size must be {self._min_size} or bigger")
-            sys.exit(1)
-        elif size > self._max_size:
-            print("Board too big")
+            print(f"Board size must be {self._min_size} or bigger, as no solution exist for a 4x4 board")
             sys.exit(1)
 
         algorithm = path_finder(size, start_point)
+
+        if size > algorithm.max_size:
+            print("Board too big for current algorithm, must be 9 or less")
+            sys.exit(1)
+
         print(f"Calculating path for {size}x{size} board using algorithm '{algorithm.name}'....")
         start = time.time()
         movements = algorithm.get_movements()
