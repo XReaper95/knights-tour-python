@@ -7,3 +7,4 @@ if __name__ == '__main__':
     algorithm = Backtracking
 
     app = KnightsTour(size, algorithm, start_point, False)
+#aaaa
